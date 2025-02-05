@@ -92,16 +92,51 @@ public class Polygone
   /** Verifie si un point appartient au polygone.
    * @param pt Point a tester
    */
-  public boolean contient (Point pt)
-  {
-    return (false);
+  public boolean contient (Point pt) {
+    int intersections = 0;
+    // On utilise une demi-droite horizontale vers la droite
+    
+    for (int i = 0; i < pts.length; i++) {
+      Point p1 = pts[i];
+      Point p2 = suiv(i);
+      
+      // On ne compte pas les intersections si le point est sur une arête
+      if (new Segment(p1, p2).contient(pt)) return true;
+      
+      // On vérifie si l'arête traverse la demi-droite horizontale
+      if ((p1.y() > pt.y()) != (p2.y() > pt.y())) {
+        // Calcul du point d'intersection avec la droite horizontale
+        double x = p1.x() + (p2.x() - p1.x()) * (pt.y() - p1.y()) 
+                  / (p2.y() - p1.y());
+        
+        // On compte l'intersection si elle est à droite du point
+        if (x > pt.x()) intersections++;
+      }
+    }
+    
+    // Si le nombre d'intersections est impair, le point est à l'intérieur
+    return (intersections % 2 == 1);
   }
 
   /** Verifie si un sommet est convexe.
    * @param n Indice du sommet a tester
    */
-  public boolean convexe (int n)
-  {
-    return (true);
+  public boolean convexe (int n) {
+    Point precedent = prec(n);
+    Point courant = pts[n];
+    Point suivant = suiv(n);
+    
+    // Calcul des vecteurs
+    double v1x = courant.x() - precedent.x();
+    double v1y = courant.y() - precedent.y();
+    double v2x = suivant.x() - courant.x();
+    double v2y = suivant.y() - courant.y();
+    
+    // Calcul du produit vectoriel
+    double produitVectoriel = v1x * v2y - v1y * v2x;
+    
+    // Un sommet est convexe si le produit vectoriel est positif ou nul
+    // (cas de l'angle plat)
+    return produitVectoriel >= 0;
   }
 }
