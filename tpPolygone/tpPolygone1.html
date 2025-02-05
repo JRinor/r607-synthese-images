@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head><title>Even TP Polygones</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  </head>
+  <body bgcolor="#BEFEDE" text="#000000" style="font-family:verdana">
+    <h2>IN6 - Canevas du TP sur le traitement des polygones</h2>
+    <h3> Avertissement pr&eacute;alable</h3>
+    <p> Presser la touche <tt>'u'</tt> quand un java r&eacute;cent
+        est utilis&eacute;. </p>
+    <p> Bien tester chaque m&eacute;thode avant de passer &agrave;
+        la suivante. </p>
+    <h3> Exercice 1 : Intersection de segments </h3> 
+    <dl>
+      <dt> Compl&eacute;ter la classe <tt>Segment</tt> </dt>
+      <dd> - Test d'intersection de segments (m&eacute;thode
+             <tt>coupe</tt>). <br>
+             Attention, les extr&eacute;mit&eacute;s du param&egrave;tre
+             doivent &ecirc;tre prises en compte (intervalle ferm&eacute;
+             <tt>[0,1]</tt>), mais pas celles de l'instance (intervalle ouvert
+             <tt>]0,1[</tt>). </dd>
+      <dd> - Calcul d'intersection de segments (m&eacute;thode
+             <tt>intersection</tt>).
+    </dl>
+    <dl>
+      <dt> Ex&eacute;cuter <tt>java Exo 1</tt> pour tester. </dt>
+      <dd> Le segment en param&egrave;tre passe du bleu au rouge quand le
+           test <tt>coupe</tt> retourne <tt>true</tt>. </dd>
+      <dd> Le cercle qui appara&icirc;t montre l'intersection calcul&eacute;e.
+           </dd>
+      <dd> Quand le segment jaune fr&ocirc;le le segment bleu, il ne doit pas
+           y avoir d'intersection. </dd>
+      <dd> Quand le segment bleu fr&ocirc;le le segment jaune, une intersection
+           doit balayer le segment jaune. </dd>
+      <dd> Quand on met les segments bout &agrave; bout, il ne doit pas
+           y avoir d'intersection. </dd>
+      <dd> Quand on aligne les segments, il ne doit pas y avoir d'intersection,
+           m&ecirc;me en cas de recouvrement (peut &ecirc;tre utile pour
+           le percement d'un canal). </dd>
+    </dl>
+    <h3> Exercice 2 : Test de convexit&eacute; </h3> 
+    <dl>
+      <dt> Compl&eacute;ter la m&eacute;thode <tt>convexe (int n)</tt>
+           de la classe <tt>Polygone</tt> </dt>
+      <dd> En cas d'angle plat, le sommet est consid&eacute;r&eacute;
+           convexe. </dd>
+    </dl>
+    <dl>
+      <dt> Ex&eacute;cuter <tt>java Exo 2</tt> pour tester. </dt>
+      <dd> Les sommets non-convexes sont entour&eacute;s. </dd>
+    </dl>
+    <h3> Exercice 3 : Test d'appartenance d'un point au polygone </h3> 
+    <dl>
+      <dt> Compl&eacute;ter la m&eacute;thode <tt>contient (Point pt)</tt>
+           de la classe <tt>Polygone</tt> </dt>
+      <dd> Les points de fronti&egrave;re appartiennent au polygone. </dd>
+      <dd> Choisir une demi-droite horizontale ou verticale pour bien tester
+           les cas limites. </dd>
+    </dl>
+    <dl>
+      <dt> Ex&eacute;cuter <tt>java Exo 3</tt> pour tester. </dt>
+      <dd> Le sommet est entour&eacute; quand il est &agrave;
+           l'ext&eacute;rieur du polygone. </dd>
+      <dd> V&eacute;rifier les cas critiques &agrave; l'aide de la touche
+           <tt>'n'</tt> </dd>
+    </dl>
+  </body>
+</html>
