@@ -21,10 +21,10 @@ public class ColorCube extends ColorShape
       gl.glVertex3f (0.5f, -0.5f, -0.5f);
 
       gl.glColor3f (0.6f, 0.3f, 0.6f);
-  gl.glVertex3f (-0.5f, -0.5f, 0.5f);
-  gl.glVertex3f (-0.5f, -0.5f, -0.5f);
-  gl.glVertex3f (-0.5f, 0.5f, -0.5f);
-  gl.glVertex3f (-0.5f, 0.5f, 0.5f);
+      gl.glVertex3f (-0.5f, -0.5f, 0.5f);
+      gl.glVertex3f (-0.5f, -0.5f, -0.5f);
+      gl.glVertex3f (-0.5f, 0.5f, -0.5f);
+      gl.glVertex3f (-0.5f, 0.5f, 0.5f);
 
       gl.glColor3f (0.1f, 0.3f, 0.8f);
       gl.glVertex3f (-0.5f, -0.5f, -0.5f);
@@ -39,10 +39,10 @@ public class ColorCube extends ColorShape
       gl.glVertex3f (0.5f, -0.5f, 0.5f);
 
       gl.glColor3f (0.3f, 0.6f, 0.6f);
-  gl.glVertex3f (0.5f, -0.5f, 0.5f);
-  gl.glVertex3f (0.5f, 0.5f, 0.5f);
-  gl.glVertex3f (0.5f, 0.5f, -0.5f);
-  gl.glVertex3f (0.5f, -0.5f, -0.5f);
+      gl.glVertex3f (0.5f, -0.5f, 0.5f);
+      gl.glVertex3f (0.5f, 0.5f, 0.5f);
+      gl.glVertex3f (0.5f, 0.5f, -0.5f);
+      gl.glVertex3f (0.5f, -0.5f, -0.5f);
 
       gl.glColor3f (0.3f, 0.1f, 0.8f);
       gl.glVertex3f (0.5f, 0.5f, 0.5f);
