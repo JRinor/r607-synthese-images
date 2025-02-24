@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head><title>Even TP Brep</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  </head>
+  <body bgcolor="#BEFEDE" text="#000000" style="font-family:verdana">
+    <h2>IN6 - TP sur les primitives surfaciques</h2>
+    <b>1ere partie : Analyse d'une primitive 3D simple</b><br>
+      <p> Travailler dans le r&eacute;pertoire <tt>exoPrim3d</tt>. </p>
+      <dl>
+        <dt> Compiler <em>Exo.java</em> et ex&eacute;cuter la classe
+          <em>Exo</em>. </dt>
+        <dd> - Utiliser les touches "fl&egrave;ches" du clavier pour
+           analyser la sc&egrave;ne. Expliquer dans le compte-rendu ce qui
+           appara&icirc;t &agrave; l'&eacute;cran. </dd>
+        <dd> - Corriger le d&eacute;faut dans la classe <em>ColorCube</em>
+           (il provient des lignes mal indent&eacute;es). </dd>
+      </dl>
+    <b>2eme partie : Approximations poly&eacute;driques</b><br>
+      <dl>
+        <dd> - Compl&eacute;ter et tester la primitive cylindrique,
+              nomm&eacute;e <em>ColorCylinder</em>, bas&eacute;e sur le
+              m&ecirc;me principe que la primitive <em>ColorCube</em>,
+              utilisant les primitives de trac&eacute;
+              <em>GL_TRIANGLE_STRIP</em> et <em>GL_TRIANGLE_FAN</em>. <br>
+              Ce cylindre aura en attributs une hauteur, un rayon, et une
+              r&eacute;solution (le nombre de facettes planes formant le
+              pourtour) dont on donnera une valeur par d&eacute;faut de
+              sorte que le cylindre soit toujours bien cadr&eacute; dans
+              la fen&ecirc;tre, et que l'on puisse le tester correctement. <br>
+              On choisira des couleurs distinctes pour chaque face. <br>
+              Utiliser la touche <tt>r</tt> pour conna&icirc;tre les axes
+              du rep&egrave;re de r&eacute;f&eacute;rence (l'axe Z est
+              rouge). </dd> <br>
+        <dd> - Ajouter et tester une primitive comique, nomm&eacute;e
+              <em>ColorCone</em> avec pour seuls attributs une hauteur,
+              un rayon de base et une r&eacute;solution, en utilisant
+              uniquement deux primitives <em>GL_TRIANGLE_FAN</em>.
+              Des valeurs par d&eacute;faut seront fournies pour les
+              param&egrave;tres de sorte que le c&ocirc;ne soit toujours
+              bien cadr&eacute; dans la fen&ecirc;tre, et que l'on puisse
+              le tester correctement. <br>
+              On choisira des couleurs distinctes pour chaque face. </dd>
+      </dl>
+    <b>3eme partie : Primitives volumiques liss&eacute;es</b><br>
+      <p> Travailler dans le r&eacute;pertoire <tt>exoSolid</tt>. </p>
+      <dl>
+        <dt> Compiler <em>Exo.java</em> puis ex&eacute;cuter <em>Exo</em>
+          avec <em>1</em> en argument. </dt>
+        <dt> Par rapport &agrave; la primitive <em>ColorCube</em> o&ugrave;
+             une couleur est sp&eacute;cifi&eacute;e pour chaque facette
+             plane, dans la primitive <em>Box</em>, sont
+             sp&eacute;cifi&eacute;s une normale en chaque sommet, un
+             mat&eacute;riau pour chaque objet et des sources de
+             lumi&egrave;re pour la sc&egrave;ne. </dt> <br>
+        <dd> - Ajouter et tester une primitive conique, nomm&eacute;e
+              <em>Cone</em>, similaire &agrave; <em>ColorCone</em>, mais dans
+              laquelle la sp&eacute;cification de couleurs est
+              remplac&eacute;e par une sp&eacute;cification de normales en
+              chaque sommet. <br>
+              Mettre <em>2</em> en argument pour tester. </dd> <br>
+        <dd> - Ajouter et tester une primitive <em>Milestone</em>, de forme
+              similaire &agrave; une borne kilom&eacute;trique : une
+              bo&icirc;te surmont&eacute;e d'un demi-cylindre dont le
+              diam&egrave;tre correspond &agrave; la largeur de la
+              bo&icirc;te (cf dessin). <br>
+              Respecter les param&egrave;tres fournis. <br>
+              Utiliser le moins possible de bloc begin - end. <br>
+              Mettre <em>3</em> en argument pour tester. </dd> <br>
+        <dd> - Ajouter et tester une primitive <em>Wedge</em>, de forme
+              similaire &agrave; une borne kilom&eacute;trique coup&eacute;e
+              en deux selon un plan diagonal tel que la partie arrondie
+              soit &eacute;paisse et la base d'&eacute;paisseur nulle.
+              L'&eacute;paisseur (<em>depth</em>) varie en fonction de
+              la hauteur. L'une des faces planes sera parall&egrave;le
+              au plan 0XZ.
+              Respecter les param&egrave;tres fournis. <br>
+              Utiliser le moins possible de bloc begin - end. <br>
+              Mettre <em>4</em> en argument pour tester. </dd> <br>
+        <dd> <img src="formes/box.png" width="100" height="100">
+             <img src="formes/cone.png" width="100" height="100">
+             <img src="formes/milestone.png" width="100" height="100">
+             <img src="formes/wedge.png" width="100" height="100">
+             <img src="formes/diamondtorus.png" width="100" height="100">
+             <img src="formes/circtorus.png" width="100" height="100">
+             <img src="formes/sphere.png" width="100" height="100">
+             <img src="formes/dome.png" width="100" height="100">
+        </dd> <br>
+        <dd> - Ajouter et tester une primitive <em>DiamondTorus</em>, un
+              tore &agrave; section en forme de carr&eacute; tourn&eacute;
+              de 45 degr&eacute;s. <br>
+              Mettre <em>5</em> en argument pour tester. </dd> <br>
+        <dd> - Ajouter et tester une primitive <em>CircTorus</em>, un
+              tore &agrave; section circulaire (un anneau). <br>
+              Pour cette primitive, on a un param&egrave;tre de
+              r&eacute;solution pour la rotation autour du centre du tore,
+              et un autre param&egrave;tre de r&eacute;solution pour la
+              rotation autour de la section du tore. <br>
+              Mettre <em>6</em> en argument pour tester. </dd> <br>
+      </dl>
+    <b>4eme partie : Maillages</b><br>
+      <dl>
+        <dd> - Ajouter et tester une primitive sph&eacute;rique, nomm&eacute;e
+              <em>Sphere</em> bas&eacute;e sur des coordonn&eacute;es
+              sph&eacute;riques (longitude et platitude), avec pour
+              attributs un rayon une r&eacute;solution en latitude (nombre
+              de parall&egrave;les) et une r&eacute;solution en longitude
+              (nombre de m&eacute;ridiens). <br>
+              Mettre <em>7</em> en argument pour tester. </dd> <br>
+        <dd> - Ajouter et tester une primitive sph&eacute;rique,
+              nomm&eacute;e <em>Dome</em>, bas&eacute;e sur la subdivision
+              r&eacute;cursive d'un icosa&egrave;dre (poly&egrave;dre
+              r&eacute;gulier &agrave; 20 faces et 12 sommets), avec en
+              attributs un rayon et une r&eacute;solution (nombre de
+              subdivisions effectu&eacute;es). <br>
+              On pourra s'inspirer de la primitive
+              <tt>ColorIcosahedron.java</tt> disponible dans le
+              r&eacute;pertoire <tt>exoPrim3D</tt>. <br>
+              Une version simple s'appuie sur la primitive
+              <em>GL_TRIANGLES</em>. <br>
+              Une version optimis&eacute;e s'appuie sur une suite de
+              <em>GL_TRIANGLE_STRIP</em>. <br>
+              Mettre <em>8</em> en argument pour tester. </dd>
+      </dl>
+  </body>
+</html>
