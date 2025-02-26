@@ -201,27 +201,43 @@ public class Skittle
       n[i][1] = (float) Math.sin (angle);
     }
 
-    // Low cylinder face
-    gl.glBegin (GL2.GL_TRIANGLE_STRIP);
-      for (int j = 0; j < bres; j++)
-      {
-        gl.glNormal3f (n[j][0], n[j][1], 0.0f);
-        gl.glVertex3f (radius * n[j][0], radius * n[j][1], height / 2);
-        gl.glVertex3f (radius * n[j][0], radius * n[j][1], 0.0f);
-      }
-      gl.glNormal3f (n[0][0], n[0][1], 0.0f);
-      gl.glVertex3f (radius * n[0][0], radius * n[0][1], height / 2);
-      gl.glVertex3f (radius * n[0][0], radius * n[0][1], 0.0f);
-    gl.glEnd ();
+    // Low cylinder face with crevasses
+    gl.glBegin(GL2.GL_TRIANGLE_STRIP);
+    createCrevasses(gl);
+    gl.glEnd();
 
     // Bottom face
-    gl.glBegin (GL2.GL_TRIANGLE_FAN);
-      gl.glNormal3f (0.0f, 0.0f, - 1.0f);
-      gl.glVertex3f (0.0f, 0.0f, 0.0f);
-      gl.glVertex3f (radius * n[0][0], radius * n[0][1], 0.0f);
-      for (int j = bres - 1; j >= 0; j--)
-        gl.glVertex3f (radius * n[j][0], radius * n[j][1], 0.0f);
+    gl.glBegin(GL2.GL_TRIANGLE_FAN);
+    gl.glNormal3f(0.0f, 0.0f, -1.0f);
+    gl.glVertex3f(0.0f, 0.0f, 0.0f);
+    gl.glVertex3f(radius * n[0][0], radius * n[0][1], 0.0f);
+    for (int j = bres - 1; j >= 0; j--)
+      gl.glVertex3f (radius * n[j][0], radius * n[j][1], 0.0f);
     gl.glEnd ();
+  }
+
+  /** Creates crevasses on the lower part of the skittle */
+  private void createCrevasses(GL2 gl) {
+    float n[][] = new float[bres][2];
+    for (int i = 0; i < bres; i++) {
+      double angle = 2 * i * Math.PI / bres;
+      n[i][0] = (float) Math.cos(angle);
+      n[i][1] = (float) Math.sin(angle);
+    }
+
+    for (int i = 0; i < ns; i++) {
+      float angleOffset = (float) (2 * Math.PI * i / ns);
+      for (int j = 0; j < bres; j++) {
+        float angle = (float) (2 * Math.PI * j / bres) + angleOffset;
+        float nx = (float) Math.cos(angle);
+        float ny = (float) Math.sin(angle);
+        float nz = (j % 2 == 0) ? 0.1f : -0.1f; // Adjust normals for crevasse effect
+
+        gl.glNormal3f(nx, ny, nz);
+        gl.glVertex3f(radius * nx, radius * ny, height / 2);
+        gl.glVertex3f(radius * nx, radius * ny, 0.0f);
+      }
+    }
   }
 
   /** Renders the skittle top.
