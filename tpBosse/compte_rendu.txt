@@ -1,0 +1,31 @@
+ Création des crevasses par modification des normales
+1. Division du cylindre
+
+Le cylindre inférieur a été divisé en 4 couronnes superposées
+Utilisation de la variable numCylinders = 4
+Chaque couronne a une hauteur de cylinderHeight = height / (2 * numCylinders)
+2. Gestion des crevasses
+
+Implémentation de trois configurations selon ns :
+ns = 1 : Une crevasse centrale unique
+ns = 2 : Deux crevasses opposées
+ns = 3 : Trois crevasses régulièrement espacées (tous les 120°)
+La largeur des crevasses est contrôlée par le paramètre sw
+3. Modification des normales
+
+Les normales sont modifiées uniquement aux sommets des cylindres
+Dans les zones de crevasse :
+Les normales sont réduites (facteur 0.5) pour créer l'illusion de profondeur
+Seul le point supérieur de chaque segment a sa normale modifiée
+Hors des zones de crevasse :
+Les normales restent standards (perpendiculaires à la surface)
+4. Conservation de la géométrie
+
+La structure géométrique du cylindre reste inchangée
+Seules les normales sont modifiées, pas les positions des vertices
+L'organisation en triangle_strip est maintenue pour chaque couronne
+5. Contrôles interactifs
+
+Touche 's' : Change le nombre de crevasses (1-3)
+Touche 'w' : Modifie la largeur des crevasses
+Cette approche crée une illusion de relief sans modifier la géométrie réelle de l'objet, uniquement en jouant sur l'éclairage via la modification des normales aux sommets des cylindres.
