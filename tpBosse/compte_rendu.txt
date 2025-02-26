@@ -1,4 +1,4 @@
- Création des crevasses par modification des normales
+Création des crevasses par modification des normales
 1. Division du cylindre
 
 Le cylindre inférieur a été divisé en 4 couronnes superposées
@@ -29,3 +29,44 @@ L'organisation en triangle_strip est maintenue pour chaque couronne
 Touche 's' : Change le nombre de crevasses (1-3)
 Touche 'w' : Modifie la largeur des crevasses
 Cette approche crée une illusion de relief sans modifier la géométrie réelle de l'objet, uniquement en jouant sur l'éclairage via la modification des normales aux sommets des cylindres.
+
+Implémentation du biseautage (Partie 2)
+1. Types de biseaux
+
+Quatre types de biseaux différents selon ct :
+- DOUX (ct=0) : biseau arrondi avec une normale à 45° (normalZ = 0.5f)
+- DROIT (ct=1) : biseau droit avec une normale verticale (normalZ = 1.0f)
+- DUR (ct=2) : biseau peu prononcé avec une normale presque horizontale (normalZ = 0.25f)
+- SANS (ct=3) : pas de biseau
+
+2. Paramètres du biseau
+
+- La taille du biseau est contrôlée par cs
+- Adaptation du rayon selon le type :
+  * DOUX : radius - cs/2
+  * DROIT : radius - cs
+  * DUR : radius (pas de modification)
+  * SANS : pas de biseau
+
+3. Géométrie du biseau
+
+- Division de la partie supérieure en deux zones :
+  * Zone du biseau : entre height et height-chamferHeight
+  * Zone cylindrique principale : entre height-chamferHeight et height/2
+- Utilisation de GL_TRIANGLE_STRIP pour créer les faces
+- Normales adaptées selon le type de biseau
+
+4. Contrôles interactifs
+
+- Touche 't' : Change le type de biseau (0-3)
+- Touche 'h' : Modifie la largeur/hauteur du biseau
+
+5. Adaptation des normales
+
+- Les normales sont ajustées pour créer l'effet visuel correspondant à chaque type de biseau
+- La composante Z de la normale (normalZ) détermine l'apparence du biseau :
+  * Plus elle est grande, plus le biseau apparaît abrupt
+  * Plus elle est petite, plus le biseau apparaît doux
+
+Cette implémentation permet de créer différents effets de biseautage tout en conservant 
+la structure géométrique de base de la quille.
