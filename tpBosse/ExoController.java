@@ -96,6 +96,9 @@ public class ExoController implements KeyListener
       case 's' :
         myView.incCountOfStripes ();
         break;
+      case 'S' :
+        myView.updateLowerBaseNormals(canvas.getGL().getGL2()); // Update normals when 'S' is pressed
+        break;
       case 'w' :
         myView.incStripeWidth (true);
         break;

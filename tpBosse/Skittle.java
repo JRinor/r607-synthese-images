@@ -242,6 +242,9 @@ public class Skittle
       adjustNormals(gl, n, k);
     }
 
+    // Create crevasses
+    createCrevasses(gl, n);
+
     // Bottom face
     gl.glBegin(GL2.GL_TRIANGLE_FAN);
     gl.glNormal3f(0.0f, 0.0f, -1.0f);

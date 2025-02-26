@@ -368,4 +368,9 @@ public class ExoView implements GLEventListener
     poseMatrix[10] = poseQuat[0] * poseQuat[0] - poseQuat[1] * poseQuat[1]
                      - poseQuat[2] * poseQuat[2] + poseQuat[3] * poseQuat[3];
   }
+
+  /** Updates the normals of the lower base */
+  public void updateLowerBaseNormals(GL2 gl) {
+    skitty.drawLowerBase(gl); // Trigger the normal adjustment
+  }
 }
