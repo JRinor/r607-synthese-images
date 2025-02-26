@@ -157,35 +157,7 @@ public class Skittle
    */ 
   public void drawUpperBase (GL2 gl)
   {
-    float n[][] = new float[bres][2];
-    for (int i = 0; i < bres; i++)
-    {
-      double angle = 2 * i * Math.PI / bres;
-      n[i][0] = (float) Math.cos (angle);
-      n[i][1] = (float) Math.sin (angle);
-    }
-
-    // Top face 
-    gl.glBegin (GL2.GL_TRIANGLE_FAN);
-      gl.glNormal3f (0.0f, 0.0f, 1.0f);
-      gl.glVertex3f (0.0f, 0.0f, height);
-      for (int j = 0; j < bres; j++)
-        gl.glVertex3f (radius * n[j][0], radius * n[j][1], height);
-      gl.glVertex3f (radius * n[0][0], radius * n[0][1], height);
-    gl.glEnd ();
-
-    // Up cylinder face
-    gl.glBegin (GL2.GL_TRIANGLE_STRIP);
-      for (int j = 0; j < bres; j++)
-      {
-        gl.glNormal3f (n[j][0], n[j][1], 0.0f);
-        gl.glVertex3f (radius * n[j][0], radius * n[j][1], height);
-        gl.glVertex3f (radius * n[j][0], radius * n[j][1], height / 2);
-      }
-      gl.glNormal3f (n[0][0], n[0][1], 0.0f);
-      gl.glVertex3f (radius * n[0][0], radius * n[0][1], height);
-      gl.glVertex3f (radius * n[0][0], radius * n[0][1], height / 2);
-    gl.glEnd ();
+    createUpperBase(gl);
   }
 
   /** Renders the lower part of the skittle base.
@@ -193,6 +165,18 @@ public class Skittle
    */ 
   public void drawLowerBase (GL2 gl)
   {
+    createLowerBase(gl);
+  }
+
+  /** Renders the skittle top.
+   * @param gl GL2 context.
+   */ 
+  public void drawTop (GL2 gl)
+  {
+    createTop(gl);
+  }
+
+  private void createLowerBase(GL2 gl) {
     float n[][] = new float[bres][2];
     for (int i = 0; i < bres; i++)
     {
@@ -224,11 +208,39 @@ public class Skittle
     gl.glEnd ();
   }
 
-  /** Renders the skittle top.
-   * @param gl GL2 context.
-   */ 
-  public void drawTop (GL2 gl)
-  {
+  private void createUpperBase(GL2 gl) {
+    float n[][] = new float[bres][2];
+    for (int i = 0; i < bres; i++)
+    {
+      double angle = 2 * i * Math.PI / bres;
+      n[i][0] = (float) Math.cos (angle);
+      n[i][1] = (float) Math.sin (angle);
+    }
+
+    // Top face 
+    gl.glBegin (GL2.GL_TRIANGLE_FAN);
+      gl.glNormal3f (0.0f, 0.0f, 1.0f);
+      gl.glVertex3f (0.0f, 0.0f, height);
+      for (int j = 0; j < bres; j++)
+        gl.glVertex3f (radius * n[j][0], radius * n[j][1], height);
+      gl.glVertex3f (radius * n[0][0], radius * n[0][1], height);
+    gl.glEnd ();
+
+    // Up cylinder face
+    gl.glBegin (GL2.GL_TRIANGLE_STRIP);
+      for (int j = 0; j < bres; j++)
+      {
+        gl.glNormal3f (n[j][0], n[j][1], 0.0f);
+        gl.glVertex3f (radius * n[j][0], radius * n[j][1], height);
+        gl.glVertex3f (radius * n[j][0], radius * n[j][1], height / 2);
+      }
+      gl.glNormal3f (n[0][0], n[0][1], 0.0f);
+      gl.glVertex3f (radius * n[0][0], radius * n[0][1], height);
+      gl.glVertex3f (radius * n[0][0], radius * n[0][1], height / 2);
+    gl.glEnd ();
+  }
+
+  private void createTop(GL2 gl) {
     float n[][][] = new float[tres][4 * tres][3];
     for (int i = 0; i < tres; i++)
     {
