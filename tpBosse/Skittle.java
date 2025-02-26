@@ -205,6 +205,24 @@ public class Skittle
     }
   }
 
+  /** Adjusts the normals of the vertices of all cylinders in the lower base */
+  private void adjustNormals(GL2 gl, float[][] n, int k) {
+    float z1 = k * height / 8;
+    float z2 = (k + 1) * height / 8;
+
+    gl.glBegin(GL2.GL_TRIANGLE_STRIP);
+    for (int j = 0; j < bres; j++) {
+      float nx = n[j][0];
+      float ny = n[j][1];
+      float nz = (k % 2 == 0) ? 0.1f : -0.1f; // Adjust normals for crevasse effect
+
+      gl.glNormal3f(nx, ny, nz);
+      gl.glVertex3f(radius * nx, radius * ny, z2);
+      gl.glVertex3f(radius * nx, radius * ny, z1);
+    }
+    gl.glEnd();
+  }
+
   /** Renders the lower part of the skittle base.
    * @param gl GL2 context.
    */ 
@@ -221,20 +239,7 @@ public class Skittle
 
     // Divide the base into multiple horizontal sections and adjust normals
     for (int k = 0; k < 4; k++) {
-      float z1 = k * height / 8;
-      float z2 = (k + 1) * height / 8;
-
-      gl.glBegin(GL2.GL_TRIANGLE_STRIP);
-      for (int j = 0; j < bres; j++) {
-        float nx = n[j][0];
-        float ny = n[j][1];
-        float nz = (k % 2 == 0) ? 0.1f : -0.1f; // Adjust normals for crevasse effect
-
-        gl.glNormal3f(nx, ny, nz);
-        gl.glVertex3f(radius * nx, radius * ny, z2);
-        gl.glVertex3f(radius * nx, radius * ny, z1);
-      }
-      gl.glEnd();
+      adjustNormals(gl, n, k);
     }
 
     // Bottom face
