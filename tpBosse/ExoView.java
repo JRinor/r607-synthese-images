@@ -5,10 +5,11 @@
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
-
+import com.jogamp.newt.event.KeyEvent;
+import com.jogamp.newt.event.KeyListener;
 
 /** GL2 context to render a movable 3D primitive */
-public class ExoView implements GLEventListener
+public class ExoView implements GLEventListener, KeyListener
 {
   /** Skittle radius */
   float sr = 0.2f;
@@ -115,6 +116,7 @@ public class ExoView implements GLEventListener
     * the drawable will swap its buffers if necessary.
     * @param gLDrawable GLAutoDrawable object.
     */
+  @Override
   public void display (GLAutoDrawable gLDrawable)
   {
     final GL2 gl = gLDrawable.getGL().getGL2 ();
@@ -367,5 +369,34 @@ public class ExoView implements GLEventListener
     poseMatrix[9] = 2 * (poseQuat[2] * poseQuat[3] - poseQuat[0] * poseQuat[1]);
     poseMatrix[10] = poseQuat[0] * poseQuat[0] - poseQuat[1] * poseQuat[1]
                      - poseQuat[2] * poseQuat[2] + poseQuat[3] * poseQuat[3];
+  }
+
+  /** Updates the normals of the lower base */
+  public void updateLowerBaseNormals(GL2 gl) {
+    skitty.drawLowerBase(gl); // Trigger the normal adjustment
+  }
+
+  @Override
+  public void keyPressed(KeyEvent e) {
+      switch (e.getKeyCode()) {
+          case KeyEvent.VK_S:
+              incCountOfStripes();
+              break;
+          case KeyEvent.VK_W:
+              incStripeWidth(true);
+              break;
+          case KeyEvent.VK_T:
+              incChamferType();
+              break;
+          case KeyEvent.VK_H:
+              incChamferSize(true);
+              break;
+          // Add more cases if needed
+      }
+  }
+
+  @Override
+  public void keyReleased(KeyEvent e) {
+      // Handle key release if needed
   }
 }

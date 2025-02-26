@@ -189,7 +189,12 @@ public class Skittle
     gl.glBegin (GL2.GL_TRIANGLE_STRIP);
       for (int j = 0; j < bres; j++)
       {
-        gl.glNormal3f (n[j][0], n[j][1], 0.0f);
+        // Adjust normals for embossing effect
+        if (j % (bres / ns) < (bres / ns) * sw) {
+            gl.glNormal3f(n[j][0] * 0.5f, n[j][1] * 0.5f, 0.0f);
+        } else {
+            gl.glNormal3f(n[j][0], n[j][1], 0.0f);
+        }
         gl.glVertex3f (radius * n[j][0], radius * n[j][1], height / 2);
         gl.glVertex3f (radius * n[j][0], radius * n[j][1], 0.0f);
       }
