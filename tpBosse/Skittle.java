@@ -188,7 +188,7 @@ public class Skittle
     gl.glEnd ();
   }
 
-  /** Creates crevasses on the lower part of the skittle */
+  /** Creates horizontal crevasses on the lower part of the skittle */
   private void createCrevasses(GL2 gl, float[][] n) {
     for (int i = 0; i < ns; i++) {
       float angleOffset = (float) (2 * Math.PI * i / ns);
@@ -219,7 +219,7 @@ public class Skittle
       n[i][1] = (float) Math.sin(angle);
     }
 
-    // Divide the base into multiple cylinders and adjust normals
+    // Divide the base into multiple horizontal sections and adjust normals
     for (int k = 0; k < 4; k++) {
       float z1 = k * height / 8;
       float z2 = (k + 1) * height / 8;
