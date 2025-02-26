@@ -245,35 +245,73 @@ public class Skittle
   }
 
   private void createUpperBase(GL2 gl) {
-    float n[][] = new float[bres][2];
-    for (int i = 0; i < bres; i++)
-    {
-      double angle = 2 * i * Math.PI / bres;
-      n[i][0] = (float) Math.cos (angle);
-      n[i][1] = (float) Math.sin (angle);
+    float[][] n = new float[bres][2];
+    for (int i = 0; i < bres; i++) {
+        double angle = 2 * i * Math.PI / bres;
+        n[i][0] = (float) Math.cos(angle);
+        n[i][1] = (float) Math.sin(angle);
     }
 
-    // Top face 
-    gl.glBegin (GL2.GL_TRIANGLE_FAN);
-      gl.glNormal3f (0.0f, 0.0f, 1.0f);
-      gl.glVertex3f (0.0f, 0.0f, height);
-      for (int j = 0; j < bres; j++)
-        gl.glVertex3f (radius * n[j][0], radius * n[j][1], height);
-      gl.glVertex3f (radius * n[0][0], radius * n[0][1], height);
-    gl.glEnd ();
+    // Face supérieure
+    gl.glBegin(GL2.GL_TRIANGLE_FAN);
+    gl.glNormal3f(0.0f, 0.0f, 1.0f);
+    gl.glVertex3f(0.0f, 0.0f, height);
+    for (int j = 0; j < bres; j++) {
+        gl.glVertex3f(radius * n[j][0], radius * n[j][1], height);
+    }
+    gl.glVertex3f(radius * n[0][0], radius * n[0][1], height);
+    gl.glEnd();
 
-    // Up cylinder face
-    gl.glBegin (GL2.GL_TRIANGLE_STRIP);
-      for (int j = 0; j < bres; j++)
-      {
-        gl.glNormal3f (n[j][0], n[j][1], 0.0f);
-        gl.glVertex3f (radius * n[j][0], radius * n[j][1], height);
-        gl.glVertex3f (radius * n[j][0], radius * n[j][1], height / 2);
-      }
-      gl.glNormal3f (n[0][0], n[0][1], 0.0f);
-      gl.glVertex3f (radius * n[0][0], radius * n[0][1], height);
-      gl.glVertex3f (radius * n[0][0], radius * n[0][1], height / 2);
-    gl.glEnd ();
+    // Face cylindrique avec biseau
+    float chamferHeight = cs; // Hauteur du biseau
+    float chamferRadius = radius; // Rayon du biseau
+    float normalZ = 0.0f;
+
+    switch(ct) {
+        case 0: // DOUX
+            normalZ = 0.5f;
+            chamferRadius = radius - cs/2;
+            break;
+        case 1: // DROIT
+            normalZ = 1.0f;
+            chamferRadius = radius - cs;
+            break;
+        case 2: // DUR
+            normalZ = 0.25f;
+            chamferRadius = radius;
+            break;
+        default: // SANS
+            chamferHeight = 0;
+            break;
+    }
+
+    // Partie supérieure (biseau)
+    if (ct != 3) { // Si ce n'est pas SANS biseau
+        gl.glBegin(GL2.GL_TRIANGLE_STRIP);
+        for (int j = 0; j <= bres; j++) {
+            int idx = j % bres;
+            // Point supérieur
+            gl.glNormal3f(n[idx][0], n[idx][1], normalZ);
+            gl.glVertex3f(radius * n[idx][0], radius * n[idx][1], height);
+            // Point inférieur du biseau
+            gl.glNormal3f(n[idx][0], n[idx][1], normalZ);
+            gl.glVertex3f(chamferRadius * n[idx][0], chamferRadius * n[idx][1], height - chamferHeight);
+        }
+        gl.glEnd();
+    }
+
+    // Partie cylindrique principale
+    gl.glBegin(GL2.GL_TRIANGLE_STRIP);
+    for (int j = 0; j <= bres; j++) {
+        int idx = j % bres;
+        // Point supérieur
+        gl.glNormal3f(n[idx][0], n[idx][1], 0.0f);
+        gl.glVertex3f(chamferRadius * n[idx][0], chamferRadius * n[idx][1], height - chamferHeight);
+        // Point inférieur
+        gl.glNormal3f(n[idx][0], n[idx][1], 0.0f);
+        gl.glVertex3f(radius * n[idx][0], radius * n[idx][1], height/2);
+    }
+    gl.glEnd();
   }
 
   private void createTop(GL2 gl) {
