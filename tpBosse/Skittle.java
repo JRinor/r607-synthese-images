@@ -187,7 +187,7 @@ public class Skittle
 
     // Division en 4 cylindres superposés
     int numCylinders = 4;
-    float cylinderHeight = height / (2 * numCylinders); // Divise la moitié inférieure en 4
+    float cylinderHeight = height / (2 * numCylinders);
 
     for (int cylinder = 0; cylinder < numCylinders; cylinder++) {
         float bottomZ = cylinder * cylinderHeight;
@@ -216,21 +216,19 @@ public class Skittle
                     break;
             }
 
-            // Modification des normales au sommet de chaque cylindre si dans une crevasse
-            if (inStripe) {
-                // Normal pour le point du bas
-                gl.glNormal3f(n[idx][0], n[idx][1], -0.3f);
-                gl.glVertex3f(radius * n[idx][0], radius * n[idx][1], bottomZ);
-                
-                // Normal pour le point du haut (inversée pour créer l'effet d'ondulation)
-                gl.glNormal3f(n[idx][0], n[idx][1], 0.3f);
-                gl.glVertex3f(radius * n[idx][0], radius * n[idx][1], topZ);
+            // Point du bas (normal standard)
+            gl.glNormal3f(n[idx][0], n[idx][1], 0.0f);
+            gl.glVertex3f(radius * n[idx][0], radius * n[idx][1], bottomZ);
+
+            // Point du haut (modification de la normale si dans une crevasse)
+            if (inStripe && cylinder < numCylinders-1) { // Ne pas modifier le dernier cylindre
+                // Raccourcir la normale au sommet pour créer l'effet d'ondulation
+                float normalScale = 0.5f; // Réduction de la normale
+                gl.glNormal3f(n[idx][0] * normalScale, n[idx][1] * normalScale, 0.0f);
             } else {
-                // Normales standards hors crevasse
                 gl.glNormal3f(n[idx][0], n[idx][1], 0.0f);
-                gl.glVertex3f(radius * n[idx][0], radius * n[idx][1], bottomZ);
-                gl.glVertex3f(radius * n[idx][0], radius * n[idx][1], topZ);
             }
+            gl.glVertex3f(radius * n[idx][0], radius * n[idx][1], topZ);
         }
         gl.glEnd();
     }
