@@ -178,39 +178,61 @@ public class Skittle
 
   private void createLowerBase(GL2 gl) {
     float n[][] = new float[bres][2];
-    for (int i = 0; i < bres; i++)
-    {
-      double angle = 2 * i * Math.PI / bres;
-      n[i][0] = (float) Math.cos (angle);
-      n[i][1] = (float) Math.sin (angle);
+    for (int i = 0; i < bres; i++) {
+        double angle = 2 * i * Math.PI / bres;
+        n[i][0] = (float) Math.cos(angle);
+        n[i][1] = (float) Math.sin(angle);
     }
 
-    // Low cylinder face
-    gl.glBegin (GL2.GL_TRIANGLE_STRIP);
-      for (int j = 0; j < bres; j++)
-      {
-        // Adjust normals for embossing effect
-        if (j % (bres / ns) < (bres / ns) * sw) {
-            gl.glNormal3f(n[j][0] * 0.5f, n[j][1] * 0.5f, 0.0f);
-        } else {
-            gl.glNormal3f(n[j][0], n[j][1], 0.0f);
+    // Diviser la hauteur en 4 segments pour les différentes normales
+    float heightSegment = height / 8; // Hauteur de chaque segment
+    float[] heights = {0.0f, heightSegment, 2 * heightSegment, 3 * heightSegment, height/2};
+
+    // Low cylinder face with modified normals for embossing effect
+    gl.glBegin(GL2.GL_TRIANGLE_STRIP);
+    for (int j = 0; j <= bres; j++) {
+        int idx = j % bres;
+        double angle = 2 * Math.PI * idx / bres;
+        boolean inStripe = false;
+
+        // Déterminer si nous sommes dans une crevasse
+        switch(ns) {
+            case 1: // Une crevasse centrale
+                inStripe = (angle >= Math.PI - sw*Math.PI && angle <= Math.PI + sw*Math.PI);
+                break;
+            case 2: // Deux crevasses
+                inStripe = (angle >= -sw*Math.PI && angle <= sw*Math.PI) ||
+                          (angle >= Math.PI-sw*Math.PI && angle <= Math.PI+sw*Math.PI);
+                break;
+            case 3: // Trois crevasses
+                double third = 2*Math.PI/3;
+                inStripe = (angle >= -sw*Math.PI && angle <= sw*Math.PI) ||
+                          (angle >= third-sw*Math.PI && angle <= third+sw*Math.PI) ||
+                          (angle >= 2*third-sw*Math.PI && angle <= 2*third+sw*Math.PI);
+                break;
         }
-        gl.glVertex3f (radius * n[j][0], radius * n[j][1], height / 2);
-        gl.glVertex3f (radius * n[j][0], radius * n[j][1], 0.0f);
-      }
-      gl.glNormal3f (n[0][0], n[0][1], 0.0f);
-      gl.glVertex3f (radius * n[0][0], radius * n[0][1], height / 2);
-      gl.glVertex3f (radius * n[0][0], radius * n[0][1], 0.0f);
-    gl.glEnd ();
+
+        // Modifier les normales pour créer l'illusion de relief
+        float normalScale = inStripe ? 0.5f : 1.0f;
+        
+        // Pour chaque segment vertical
+        for (int h = 0; h < heights.length; h++) {
+            float normalZ = inStripe ? (h < 2 ? -0.2f : 0.2f) : 0.0f;
+            gl.glNormal3f(n[idx][0] * normalScale, n[idx][1] * normalScale, normalZ);
+            gl.glVertex3f(radius * n[idx][0], radius * n[idx][1], heights[h]);
+        }
+    }
+    gl.glEnd();
 
     // Bottom face
-    gl.glBegin (GL2.GL_TRIANGLE_FAN);
-      gl.glNormal3f (0.0f, 0.0f, - 1.0f);
-      gl.glVertex3f (0.0f, 0.0f, 0.0f);
-      gl.glVertex3f (radius * n[0][0], radius * n[0][1], 0.0f);
-      for (int j = bres - 1; j >= 0; j--)
-        gl.glVertex3f (radius * n[j][0], radius * n[j][1], 0.0f);
-    gl.glEnd ();
+    gl.glBegin(GL2.GL_TRIANGLE_FAN);
+    gl.glNormal3f(0.0f, 0.0f, -1.0f);
+    gl.glVertex3f(0.0f, 0.0f, 0.0f);
+    for (int j = 0; j < bres; j++) {
+        gl.glVertex3f(radius * n[j][0], radius * n[j][1], 0.0f);
+    }
+    gl.glVertex3f(radius * n[0][0], radius * n[0][1], 0.0f);
+    gl.glEnd();
   }
 
   private void createUpperBase(GL2 gl) {
