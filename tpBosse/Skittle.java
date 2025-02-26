@@ -188,72 +188,40 @@ public class Skittle
     gl.glEnd ();
   }
 
-  /** Creates horizontal crevasses on the lower part of the skittle */
-  private void createCrevasses(GL2 gl, float[][] n) {
-    for (int i = 0; i < ns; i++) {
-      float angleOffset = (float) (2 * Math.PI * i / ns);
-      for (int j = 0; j < bres; j++) {
-        float angle = (float) (2 * Math.PI * j / bres) + angleOffset;
-        float nx = (float) Math.cos(angle);
-        float ny = (float) Math.sin(angle);
-        float nz = (j % 2 == 0) ? 0.1f : -0.1f; // Adjust normals for crevasse effect
-
-        gl.glNormal3f(nx, ny, nz);
-        gl.glVertex3f(radius * nx, radius * ny, height / 2);
-        gl.glVertex3f(radius * nx, radius * ny, 0.0f);
-      }
-    }
-  }
-
-  /** Adjusts the normals of the vertices of all cylinders in the lower base */
-  private void adjustNormals(GL2 gl, float[][] n, int k) {
-    float z1 = k * height / 8;
-    float z2 = (k + 1) * height / 8;
-
-    gl.glBegin(GL2.GL_TRIANGLE_STRIP);
-    for (int j = 0; j < bres; j++) {
-      float nx = n[j][0];
-      float ny = n[j][1];
-      float nz = (k % 2 == 0) ? 0.1f : -0.1f; // Adjust normals for crevasse effect
-
-      gl.glNormal3f(nx, ny, nz);
-      gl.glVertex3f(radius * nx, radius * ny, z2);
-      gl.glVertex3f(radius * nx, radius * ny, z1);
-    }
-    gl.glEnd();
-  }
-
   /** Renders the lower part of the skittle base.
    * @param gl GL2 context.
    */ 
-  @Override
   public void drawLowerBase (GL2 gl)
   {
     float n[][] = new float[bres][2];
     for (int i = 0; i < bres; i++)
     {
       double angle = 2 * i * Math.PI / bres;
-      n[i][0] = (float) Math.cos(angle);
-      n[i][1] = (float) Math.sin(angle);
+      n[i][0] = (float) Math.cos (angle);
+      n[i][1] = (float) Math.sin (angle);
     }
 
-    // Divide the base into multiple horizontal sections and adjust normals
-    for (int k = 0; k < 4; k++) {
-      adjustNormals(gl, n, k);
-    }
-
-    // Create crevasses
-    createCrevasses(gl, n);
+    // Low cylinder face
+    gl.glBegin (GL2.GL_TRIANGLE_STRIP);
+      for (int j = 0; j < bres; j++)
+      {
+        gl.glNormal3f (n[j][0], n[j][1], 0.0f);
+        gl.glVertex3f (radius * n[j][0], radius * n[j][1], height / 2);
+        gl.glVertex3f (radius * n[j][0], radius * n[j][1], 0.0f);
+      }
+      gl.glNormal3f (n[0][0], n[0][1], 0.0f);
+      gl.glVertex3f (radius * n[0][0], radius * n[0][1], height / 2);
+      gl.glVertex3f (radius * n[0][0], radius * n[0][1], 0.0f);
+    gl.glEnd ();
 
     // Bottom face
-    gl.glBegin(GL2.GL_TRIANGLE_FAN);
-    gl.glNormal3f(0.0f, 0.0f, -1.0f);
-    gl.glVertex3f(0.0f, 0.0f, 0.0f);
-    gl.glVertex3f(radius * n[0][0], radius * n[0][1], 0.0f);
-    for (int j = bres - 1; j >= 0; j--) {
-      gl.glVertex3f(radius * n[j][0], radius * n[j][1], 0.0f);
-    }
-    gl.glEnd();
+    gl.glBegin (GL2.GL_TRIANGLE_FAN);
+      gl.glNormal3f (0.0f, 0.0f, - 1.0f);
+      gl.glVertex3f (0.0f, 0.0f, 0.0f);
+      gl.glVertex3f (radius * n[0][0], radius * n[0][1], 0.0f);
+      for (int j = bres - 1; j >= 0; j--)
+        gl.glVertex3f (radius * n[j][0], radius * n[j][1], 0.0f);
+    gl.glEnd ();
   }
 
   /** Renders the skittle top.
