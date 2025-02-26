@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head><title>Even TP Bosse</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  </head>
+  <body bgcolor="#3FBFAF" text="#4F2F1F">
+    <h2>IN6 - TP sur les primitives surfaciques</h2>
+    <h3>Pr&eacute;milinaire</h3>
+      <dl>
+        <dt> Compiler et ex&eacute;cuter <tt>Prepa.java</tt>. </dt>
+        <dd> - La quille se compose d'une base d&eacute;compos&eacute;e en
+          deux parties cylindriques d'&eacute;gales hauteurs et
+          diam&egrave;tres : <it>LowerBase</it> et <it>UpperBase</it>,
+          et d'un sommet compos&eacute; d'une sph&egrave;re :
+          <it>Top</it>. </dd>
+        <dt> L'objectif est d'ornementer la quille avec des motifs bas&eacute;s
+          sur un effet visuel d'embossage, dans lequel on cr&eacute;e de
+          faux reliefs en "trichant" sur les normales. </dt>
+        <dd> <img src="dessins/quille.png" width="242" height="148"> </dd>
+      </dl>
+    <h3>Partie 1 : Embossage</h3>
+      <dl>
+        <dd> - Cr&eacute;er trois crevasses dispos&eacute;es
+          r&eacute;guli&egrave;rement sur la partie basse.
+          Attention, il ne faudra pas cr&eacute;er de relief sur le
+          cylindre mais juste une illusion de relief. A cet effet, on se
+          contentera d'agir sur les normales selon le dessin suivant : </dd>
+        <dd> <img src="dessins/bosse.png" width="230" height="178"> </dd>
+        <dd> - On a des normales diff&eacute;rentes entre la partie haute et
+          la partie basse de chaque couronne. </dd>
+        <dd> - Attention &agrave; bien conserver l'organisation de la
+          g&eacute;om&eacute;trie index&eacute;e. </dd>
+        <dd> - L'attribut <tt>sw</tt> contraint la largeur d'une crevasse
+          (compos&eacute;e des 4 couronnes). </dd>
+        <dd> - L'attribut <tt>ns</tt> contraint le nombre de crevasses :
+          <dl>
+            <dd> -> trois crevasses
+            <dd> -> deux crevasses : supprimer la crevasse centrale
+            <dd> -> une crevasse : ne conserver que la crevasse centrale
+          </dl> </dd>
+        <dd> - On pourra modifier interactivement les valeurs de ces attributs
+          par les touches 's' pour le nombre de crevasses et 'w' pour leur
+          largeur. </dd>
+      </dl>
+    <h3>Partie 2 : Biseautage </h3>
+      <dl>
+        <dt> Reprendre le mod&egrave;le de la quille pour bisouter
+          l'ar&ecirc;te sup&eacute;rieure de la partie haute de la base. </dt>
+        <dd> - Trois types de biseaux pourront &ecirc;tre choisis en plus de
+          la version sans biseau (<tt>SANS</tt>) :
+          <tt>DOUX</tt>, <tt>DROIT</tt> et <tt>DUR</tt>. </dd>
+        <dd> <img src="dessins/biseaux.png" width="318" height="114"> </dd>
+        <dd> - L'attribut <tt>cs</tt> contraint la largeur du biseau. </dd>
+        <dd> - L'attribut <tt>ct</tt> contraint le type de biseau (0 = doux,
+          1 = droit, 2 = dur). </dd>
+        <dd> - On pourra modifier interactivement les valeurs de ces attributs
+          par les touches 't' pour le type de biseau et 'h' pour leur
+          largeur (ou hauteur). </dd>
+      </dl>
+  </body>
+</html>
